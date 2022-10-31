@@ -7,24 +7,53 @@
     <title>Document</title>
 </head>
 <body>
-    
+
+    <button id = "버튼">버튼</button>
+
+
+
 
 
     <script>
-        'use strict';
+    // this 3. 기계(constructor)안에서 쓰면 새로 생성되는 오브젝트(instance)를 뜻함.
+    let 어쩌구 = {}
 
-        function 간지나는함수() {
-            console.log(this)
+    function 기계() {
+        this.이름 = 'kim'
+    }
+    
+    let 오브젝트 = new 기계();
+
+
+    // this 4. 이벤트리스너 안에서는 e.currentTarget
+    document.getElementById('버튼').addEventListener('click', function(e){
+        console.log(this);      // e.currentTarget = this
+        console.log(e.currentTarget);
+    })
+
+    // array
+    let 어레이 = [1,2,3]
+    어레이.forEach(function(a){    //콜백함수 : 함수 안에 함수, js에서는 순차적으로 실행하고 싶을때 쓴다고 생각하면 됨
+        console.log(this);  //window
+    });
+
+    // object
+    let 오브젝트2 = {
+        이름들 : ['김', '이', '박'],
+        함수 : function(){
+            console.log(this);  // 위 함수를 소유한 오브젝트2 출력됨.
+            
+            // 일반 함수 사용
+            오브젝트2.이름들.forEach(function(){
+                console.log(this);  // window
+            });
+            // arrow function 사용
+            오브젝트2.이름들.forEach(()=>{  // arrow function 특징 : 내부 this값을 변화시키지 않음(외부 this값 그대로 재사용 가능)
+                console.log(this);  // 오브젝트2 출력
+            })
         }
-        간지나는함수();
+    }
 
-
-        var 오브젝트1 = {
-                data: 'Kim',
-                간지함수: function () { console.log(this) }
-            }
-
-            오브젝트1.간지함수();
     </script>
 </body>
 </html>
