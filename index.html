@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+    <script>
+        'use strict';
+
+        function 간지나는함수() {
+            console.log(this)
+        }
+        간지나는함수();
+
+
+        var 오브젝트1 = {
+                data: 'Kim',
+                간지함수: function () { console.log(this) }
+            }
+
+            오브젝트1.간지함수();
+    </script>
+</body>
+</html>
