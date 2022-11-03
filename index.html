@@ -1,3 +1,5 @@
+<!-- arrow function() 사용해보기 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,52 +9,52 @@
     <title>Document</title>
 </head>
 <body>
-
-    <button id = "버튼">버튼</button>
-
-
-
-
-
-    <script>
-    // this 3. 기계(constructor)안에서 쓰면 새로 생성되는 오브젝트(instance)를 뜻함.
-    let 어쩌구 = {}
-
-    function 기계() {
-        this.이름 = 'kim'
-    }
     
-    let 오브젝트 = new 기계();
-
-
-    // this 4. 이벤트리스너 안에서는 e.currentTarget
-    document.getElementById('버튼').addEventListener('click', function(e){
-        console.log(this);      // e.currentTarget = this
-        console.log(e.currentTarget);
-    })
-
-    // array
-    let 어레이 = [1,2,3]
-    어레이.forEach(function(a){    //콜백함수 : 함수 안에 함수, js에서는 순차적으로 실행하고 싶을때 쓴다고 생각하면 됨
-        console.log(this);  //window
-    });
-
-    // object
-    let 오브젝트2 = {
-        이름들 : ['김', '이', '박'],
-        함수 : function(){
-            console.log(this);  // 위 함수를 소유한 오브젝트2 출력됨.
-            
-            // 일반 함수 사용
-            오브젝트2.이름들.forEach(function(){
-                console.log(this);  // window
-            });
-            // arrow function 사용
-            오브젝트2.이름들.forEach(()=>{  // arrow function 특징 : 내부 this값을 변화시키지 않음(외부 this값 그대로 재사용 가능)
-                console.log(this);  // 오브젝트2 출력
-            })
+    <script>
+        // Arrow function 문법
+        // (1) 간단하게 사용 가능 (코드가 짧아짐)
+        function add (x){
+            return x+2;
         }
-    }
+
+        let add2 = (x)=> {x+2}
+
+        console.log(add(4));
+        console.log(add2(8));
+
+        // (2) 소괄호 생략 가능 
+        let add3 = x=> {x+2}
+        
+        console.log(add3(5));
+
+        // (3) 중괄호까지 생략 가능
+        let add4 = x=>x+2;
+
+
+        // arrow functio의 특징 (this)
+        // 함수는 쓰인 위치에 따라 내부의 this값이 변화함
+        // arrow function은 어디에 써도 내부의 this값을 변화시키지 않음.
+        // 즉, 바깥에 있던 this의 의미를 그대로 내부에서 사용하는 함수인 것 (장점이자 arrow function을 쓰는 핵심이유)
+
+        // 일반 함수 사용
+        let obj1 = {
+            func : function(){
+                console.log(this);  // console 출력 결과 : obj1{~~}
+            }
+        }
+        obj1.func();
+
+        // arrow function 사용
+        let obj2 = {
+            func : ()=>{
+                console.log(this);  // console 출력 결과 : window
+            }
+        }
+        obj2.func();
+
+
+
+
 
     </script>
 </body>
