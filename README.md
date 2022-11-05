@@ -1,3 +1,32 @@
+<!-- 
+제목 ## 🤔
+<br>
+소제목 ### ✨ 
+<br><br>
+내용의 제목 #### 
+<br><br><br>
+
+❗ 중요
+📎 참고
+💡 깨달은 것
+
+
+
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
 # jsES6
 
 ## 🤔 변수 신문법 총정리 (var, let, const)
@@ -27,19 +56,26 @@ Object.freeze(사람);
 에러는 안나지만 변경은 되지 않음<br>
 에러를 나게 하려면 `'use strict';`를 추가해주면 됨.
 
-<br>
+<br><br>
 
 ### ✨ 2. 변수의 범위
 ```js 
 function 함수(){
-    var 이름 = 'kim';
+    var 이름 = 'kim';   // 가능
     이름;
 }
-cosole.log(이름);   // error : 이름 is not defined 
+cosole.log(이름);   // 에러 : 이름 is not defined 
 ```
 var로 만들면 function안에서만 존재함<br>
 하지만 let, const는 범위가 조금 더 좁음
 
+```js
+if(1==1){
+    if 이름 = 'kim';
+    console.log(이름);  // 가능
+}
+console.log(이름);  //에러
+```
 var은 function
 let const는 중괄호가 범위라고 생각하면 됨
 
