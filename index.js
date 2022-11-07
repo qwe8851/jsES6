@@ -1,38 +1,21 @@
-// es6가 문자다루는 법 : Template literals
+// template literals / tagged literals 연습문제 2개 풀어보기 
 
 
-// 1. template literals (backquote, backtick)
-let 변수 = '손흥민';
-let 문자2 = `안녕하세요 저는 ${변수}입니다.`;
+let pants = 20;
+let socks = 100;
 
-function 함수(){
-    return 10
+// 단어 순서 변경 
+function 해체분석기(문자들, pants, socks){
+    console.log(문자들[1] + pants + 문자들[0] + socks);
 }
-
-// 2. tagged literals
-함수(); // 함수뒤에 소괄호 대신에 문자열을 붙여서 사용할 수 있음
-함수`안녕하세요 저는 ${변수}입니다.`  //이렇게. 이런걸 tagged literals라고 함
+해체분석기`바지${pants} 양말${socks}`
 
 
 
-// 2-1. 밑의 코드를 tag해서 실행해보겠음. 
-function 해체분석기(문자들, 변수들, 변수들2){
-    console.log(문자들);    // 문자들을 array화 해줌
-    console.log(변수들);    // ${변수}를 뜻함
-    console.log(변수들2);   // 두번쨰 ${변수}를 담아줌
+// 바지가 0roaus 바지가 다 팔렷다는 안내 내보내기
+function 해체분석기2(글자들, 변수1, 변수2){
+    if(변수1 == 0){
+        console.log(`바지 다 팔림`);
+    }
 }
-
-해체분석기`안녕하세요 저는 ${변수}입니다. ${변수}`;
-// 단어 순서를 변경하거나, 제어하거나, ${변수}위치를 옮긴다거나 
-// `문자`를 해체분석할 수 있음
-// - 사용방법 : 함수를 만들고 파라미터를 두개 넣어주면 됨.
-
-
-// 2-2. 연습문제
-let 변수2 = '쏘니'
-
-function 해체분석기2(문자들, 변수들){
-    console.log(문자들[1] + 변수들);
-}
-
-해체분석기2`안녕하세요 ${변수}입니다.`;
+해체분석기2`바지${pants} 양말${socks}`
