@@ -1,71 +1,85 @@
-// ...Spread Operator
-
-let arr = ['hello', 'world'];
-console.log(...arr) // 1. Array에 붙이면 대괄호를 제거해줌.
-
-let 문자 = 'hello';
-console.log(...문자);   // 2. 문자에 붙이면 펼쳐줌. 어캐 가능한걸까?
-console.log('h', 'e', 'l', 'l','o');
-
-console.log(문자[1]) //e가 나옴 : 문자도 arr처럼 인덱싱이 가능함
+// Spread Operator2!!! apply(), call() 함수 알아보기)
 
 
+// 1.  Spread Operator-2 
+// array내의 모든 데이터를 파라미터로 집어넣고 싶으면?
+function 더하기(a, b, c) {
+    console.log(a + b + c);
+}
 
+let arr = [10,20,30];
+더하기(arr[0], arr[1], arr[2]); // 이렇게 해야하는데 이게 너무 번거러움!!!!!1
 
+// 원래는 이렇게 했음. (apply)
+더하기.apply(undefined, arr);
 
-// 3. 어디에 쓰는게 좋을까
-let a = [1,2,3];
-let b = [4,5];
-
-let c = [...a, 4,5];
-let d = [...a, ...b];   // 이렇게 어레이를 합치거나 복사할때 좋음
-// 보기편해서보다 "deep copy"할 때 유용
-
-
-// 4. deep copy?
-let arr1 = [1,2,3];
-let copy = arr1;   // 그냥 등호로 복사하면 값을 공유함(reference datat type(arr/obj))
-                   // 5. 그럼 완전히 각각 독립적인 값을 가지도록 arr,obj를 복사하려면 어캐야 하지? 
-arr1[3] = 4;
-
-console.log(arr1);
-console.log(copy2);   //b는 변경하지 않았음에도 값이 변경됨
-
-
-
-
-// 5. 각각 독립적인 값을 가지게 arr,obj복사하기
-let arr2 = [1, 2, 3];
-let copy2 = [...arr2];   // 독립적인 arr생성 가능(deep copy)
-
-arr2[3] = 4;
-
-console.log(arr2);      // [1,2,3,4]
-console.log(copy2);     // [1,2,3]
-
-
-// 5-2. obj일때는?
-let obj1 = { a: 1, b: 2 };
-let obj2 = {...obj2, c: 3 }; 
-
-console.log(obj2);  // { a: 1, b: 2, c: 3 }
-// 중괄호, 대괄호 벗기기 둘 다 ok
-
-// 근데 카피하다가 값 중복이 일어나면?
-let obj3 = { a: 1, b: 2 };
-let obj4 = { ...obj3, a: 3 };   //이렇게 넣으면 { a: 1, b: 2, a: 3 }
-
-console.log(obj2);    // { a: 3, b: 2 };
-// 중복이 일어나면 가장 뒤에 있는 값을 적용함.
-
-
-// ✔️ ...은 항상 중괄호나 대괄호 안에 써야 한다.
+// 지금은 이렇게 함 (...Spread Operator)
+더하기(...arr);
 
 
 
 
 
+// 2. apply
+// person1의 인사라는 함수를 person2에도 적용하고 싶으면?
+
+let person1 = {
+    인사 : function(){
+        console.log('안녕');
+    }
+}
+
+
+let person2 = {
+    name : '쏘니'
+}
+
+person1.인사.apply(person2); // 이렇게 해주면
+// "person1에 있는 인사라는 함수를 쓸건데 person2라는 obj에도 적용해서 실행해라"
+// or
+// "person.인사()라는 함수를 person2라는 obj에 있는 함수처럼 실행하라" 라는 뜻임
+
+
+// 2-1. 확인은 어떻게 할 수 있을까?
+let person3 = {
+    인사: function () {
+        console.log(this.name + ' 안녕');    
+    }
+}
+
+
+let person4 = {
+    name: '쏘니'
+}
+
+person3.인사();     // undefined 안녕
+person4.인사.apply(person3);    // 쏘니 안녕
 
 
 
+
+
+// 3. call
+// apply와 비슷한 함수
+let person5 = {
+    인사: function () {
+        console.log(this.name + ' 안녕');
+    }
+}
+
+
+let person6 = {
+    name: '쏘니'
+}
+
+// 파라미터를 넣고싶으면 함수 오른쪽에 콤마로 구분해서 넣어주면 됨
+// apply와 call의 차이는 
+person5.인사.apply(person6, [1, 2]);    // apply는 파라미터를 arr형태로 넣을 수 잇음
+person5.인사.call(person6, 1, 2);       // 얘는 arr형태 불가
+
+// 그럼 14번째 줄 코드도 이해가 될 듯!
+더하기.apply(undefined, arr);
+// 얘는 undefined라는곳에서 더하기 함수에 arr파라미터를 넣어서 실행해달라는 뜻!
+// 근데 undefined를 넣었으므로 그냥 더하기()함수가 실행됨. 그럼 굳이 apply를 쓴 이유는
+// 파라미터로 Array를 집어넣는게 가능하기 때문임!!
 
