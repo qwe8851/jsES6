@@ -46,3 +46,43 @@ function 함수2(a, b, c, d, e) {
     
 }
 함수2(1,2,3,4,5);
+// 함수에서 쓰는 점3개 Rest 파라미터
+
+function 함수(a, b, c) {
+    for (let i = 0; i < arguments.length; i++) {
+        console.log(arguments[i]);
+    }
+}
+// 함수(2,3,4);
+
+
+
+
+// 1. rest paramseter
+function 함수2(...rest) {
+    console.log(파라미터들);
+}
+함수(1,2,3,4,5,3,2,2,3,4);
+// ...기능은 spread operator와 rest parameter기능 두가지가 있음
+// 함수의 파라미터 자리에 ...을 넣어주면 이 자리에 오는 모든 파라미터들을 []안에 보관해줌
+// 그래서 파라미터를 무한히 쓸 수 있음
+
+
+// 1-1. arguments와 rest parameter의 ckdl
+// - arguments는 모든 파라미터를 []에 담아줌
+// - rest parameter는 "이 자리"에 오는 모든 파라미터를 []에 담아줌
+
+
+function func(...rest) {
+    for (let i = 0; i < rest.length; i++) {
+        console.log(rest[i]);
+    }
+}
+func(1,2,3,3,4,34);
+// arguments는 파라미터가 몇 개 들어올지를 먼저 정해줘야 하는데
+// rest는 파라미터가 몇 개 들어올지 미리 지정해주지 않아도 된다.
+
+// 주의점 1. 가장 뒤에 사용
+//           function func (a, b, ...rest)는 가능하지만 (...rest, a, b)요딴거 안됨
+//           ...rest의 뜻은 이 뒤에 오는 모든 파라미터들을 여기에 담아달라는 뜻이기 때문
+
