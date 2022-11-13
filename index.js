@@ -1,88 +1,127 @@
-// 자바스크립트 함수 업그레이드하기(default parameter / arguments)
+// Spread, rest 파라미터 연습문제 8개
 
-function 더하기(a, b) {
+
+// 1. spread 문제 1 - 위 코드의 출력 결과는?
+var a = [1, 2, 3];
+var b = '김밥';
+var c = [...b, ...a];
+console.log(c);
+// 예상결과 : ['김밥', 1, 2, 3]
+// 출력결과 : ['김', '밥', 1, 2, 3]
+
+
+
+// 2. spread 문제 2 - 위 코드의 출력 결과는?
+var a = [1, 2, 3];
+var b = ['you', 'are'];
+var c = function (a, b) {
+    // console.log([[...a], ...[...b]][1])
+    console.log([[...a], ...[...b]][1]);
+}
+c(a, b);
+// 예상결과 : 2
+// 출력결과 : you
+
+
+
+// 3. default 파라미터 문제 1
+function 함수(a = 5, b = a * 2) {
+    console.log(a + b);
+    return 10
+}
+함수(3);
+// 예상결과 : 15
+// 출력결과 : 9
+// 이건 이해가 간다. default파라미터로 현재 3이라는 파라미터를 넣어줫으므로 a는 3이 된다.
+// 글서 b는 3*2 = 6이고 3+6해서 9출력
+
+
+
+
+
+// 4. default 파라미터 문제 2
+function 함수(a = 5, b = a * 2) {
     console.log(a + b);
 }
-더하기(1);  // 파라미터가 2개 들어가는 함수인데 하나만 써도 오류 안남
+함수(undefined, undefined);
+// 예상결과 : undefined
+// 출력결과 : 15
+// undefined는 파라미터를 할당해주지 않은것과 동일하다는걸 배웠음. 
+// undefined를 넣어줘서 default파라미터로 계산된 결과가 콘솔창에 뜨는것!
 
 
 
 
 
-// 1. defult 파라미터
-function 더하기2(a, b = 10) {   // b자리에 파라미터를 안넣었을 때만 발동!!
-    console.log(a + b);
-}
-더하기2(1); //두번째 파라미터를 넣지 않고 실행해도 default 파라미터가 자동으로 실행됨
-
-// 이런것도 됨 1 - 연산
-function 더하기2(a, b = 2 * a) { };
-
-// 이런것도 됨 2 - 함수
-function 임시함수() {
-    return 10;
-}
-function 더하기2(a, b = 임시함수()) { };
-
-
-
-
-
-
-// 2. arguments
-function 함수(a, b, c) {
-    console.log(arguments[0]);  // 모든 파라미터를 []안에 넣은 변수 (array와 유사)
-    console.log(arguments[1]);
-    console.log(arguments[2]);
-}
-함수(1,2,3);
-
-// 2-1. 이렇게 활용할 수 있어요
-function 함수2(a, b, c, d, e) {
-    for (let i = 0; i < arguments.length; i++) {
-        console.log(arguments[i]);
-        // arguments를 활용해서 확장성 가득한 코드를 작성할 수 있음.
-    }
-    
-}
-함수2(1,2,3,4,5);
-// 함수에서 쓰는 점3개 Rest 파라미터
-
-function 함수(a, b, c) {
-    for (let i = 0; i < arguments.length; i++) {
-        console.log(arguments[i]);
-    }
-}
-// 함수(2,3,4);
-
-
-
-
-// 1. rest paramseter
-function 함수2(...rest) {
-    console.log(파라미터들);
-}
-함수(1,2,3,4,5,3,2,2,3,4);
-// ...기능은 spread operator와 rest parameter기능 두가지가 있음
-// 함수의 파라미터 자리에 ...을 넣어주면 이 자리에 오는 모든 파라미터들을 []안에 보관해줌
-// 그래서 파라미터를 무한히 쓸 수 있음
-
-
-// 1-1. arguments와 rest parameter의 ckdl
-// - arguments는 모든 파라미터를 []에 담아줌
-// - rest parameter는 "이 자리"에 오는 모든 파라미터를 []에 담아줌
-
-
-function func(...rest) {
+// 5. array를 만들어주는 함수를 제작하고 싶습니다.
+// 이렇게 작성하면[1, 2, 3, 4, 5]가 출력되어야합니다.
+// 함수에 숫자를 100개 집어넣으면 Array안에 숫자100개가 들어가야하고요.
+// 어레이라는 함수를 어떻게 만들면 될까요 ? (new 키워드 사용금지)
+function 어레이(...rest) {
     for (let i = 0; i < rest.length; i++) {
         console.log(rest[i]);
+        
     }
 }
-func(1,2,3,3,4,34);
-// arguments는 파라미터가 몇 개 들어올지를 먼저 정해줘야 하는데
-// rest는 파라미터가 몇 개 들어올지 미리 지정해주지 않아도 된다.
 
-// 주의점 1. 가장 뒤에 사용
-//           function func (a, b, ...rest)는 가능하지만 (...rest, a, b)요딴거 안됨
-//           ...rest의 뜻은 이 뒤에 오는 모든 파라미터들을 여기에 담아달라는 뜻이기 때문
+var newArray = 어레이(1, 2, 3, 4, 5);
+console.log(newArray); 
+
+
+
+
+
+
+// 6. 최댓값 구하기
+// Math.max()사용해서 최대값 구하기
+let numbers = [2, 3, 4, 5, 6, 1, 3, 2, 5, 5, 4, 6, 7];
+console.log(Math.max(...numbers));
+
+
+
+
+
+
+
+// 7. 글자를 알파벳순으로 정렬해주는 함수를 만들고 싶습니다. 
+// 일단 자바스크립트는 array 내의 데이터를 알파벳순으로 정렬하고 싶을 때
+// sort()라는 array 내장함수를 붙여 사용합니다. (array에만 적용가능)
+function 정렬([...rest]) {
+    let str = rest.sort();
+
+    for (let i = 0; i < str.length; i++) {
+        console.log(str[i]);
+    }
+}
+정렬('bear'); 
+
+
+
+
+
+
+// 8. 데이터마이닝 기능 만들기 
+// 알파벳들의 출현 갯수를 세어주는 함수 만들기.
+// 글자세기('aacbbb') 라고 입력하면 콘솔창에
+// { a: 2, b : 3, c : 1 }
+// ▲ 이렇게 출력해주는 글자세기() 라는 함수만들기.
+function 글자세기([...rest]) {
+    let str = rest;
+    let key;
+    let value;
+
+    for (let i = 0; i < str.length; i++) {
+        key = str[i];
+        value = 1;
+        for (let j = 0; j < i; j++) {
+            if (str[i] == str[j]){
+                value +=1;
+            }
+        }
+        console.log(key + " = " + value);
+    }
+}
+글자세기('aacbbb'); 
+
+// 모르겠다. . 
 
