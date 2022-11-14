@@ -6,8 +6,9 @@ var a = [1, 2, 3];
 var b = '김밥';
 var c = [...b, ...a];
 console.log(c);
-// 예상결과 : ['김밥', 1, 2, 3]
 // 출력결과 : ['김', '밥', 1, 2, 3]
+
+
 
 
 
@@ -19,8 +20,10 @@ var c = function (a, b) {
     console.log([[...a], ...[...b]][1]);
 }
 c(a, b);
-// 예상결과 : 2
 // 출력결과 : you
+// [[1, 2, 3], 'you', 'are'][1]이므로 you가 출력.
+
+
 
 
 
@@ -30,10 +33,8 @@ function 함수(a = 5, b = a * 2) {
     return 10
 }
 함수(3);
-// 예상결과 : 15
 // 출력결과 : 9
-// 이건 이해가 간다. default파라미터로 현재 3이라는 파라미터를 넣어줫으므로 a는 3이 된다.
-// 글서 b는 3*2 = 6이고 3+6해서 9출력
+// a파라미터가 들어왓으므로 a=3, b=6
 
 
 
@@ -44,10 +45,9 @@ function 함수(a = 5, b = a * 2) {
     console.log(a + b);
 }
 함수(undefined, undefined);
-// 예상결과 : undefined
 // 출력결과 : 15
-// undefined는 파라미터를 할당해주지 않은것과 동일하다는걸 배웠음. 
-// undefined를 넣어줘서 default파라미터로 계산된 결과가 콘솔창에 뜨는것!
+// 변수가 정의되않으면 undefined임.
+// 파라미터 자리에 undefined를 집어넣으면 아무것도 안들어왔다고 판단하고 defualt파라미터가 발동됨.
 
 
 
@@ -60,13 +60,12 @@ function 함수(a = 5, b = a * 2) {
 function 어레이(...rest) {
     for (let i = 0; i < rest.length; i++) {
         console.log(rest[i]);
-        
+
     }
 }
 
-var newArray = 어레이(1, 2, 3, 4, 5);
-console.log(newArray); 
-
+let newArray = 어레이(1, 2, 3, 4, 5);
+console.log(newArray);
 
 
 
@@ -81,47 +80,40 @@ console.log(Math.max(...numbers));
 
 
 
-
-
-// 7. 글자를 알파벳순으로 정렬해주는 함수를 만들고 싶습니다. 
+// 7. 글자를 알파벳순으로 정렬해주는 함수를 만들고 싶습니다.
 // 일단 자바스크립트는 array 내의 데이터를 알파벳순으로 정렬하고 싶을 때
 // sort()라는 array 내장함수를 붙여 사용합니다. (array에만 적용가능)
-function 정렬([...rest]) {
-    let str = rest.sort();
-
-    for (let i = 0; i < str.length; i++) {
-        console.log(str[i]);
-    }
+function 정렬(str) {
+    console.log([...str].sort());   // 'a', 'b', 'e', 'r'
+    console.log([...str].sort().join());    //a, b, e, r
+    console.log(...[...str].sort());    //a b e r
 }
-정렬('bear'); 
+정렬('bear');
+// 반복문을 쓰지 않고 더 쉽게 만들 수 있음. 
 
 
 
 
-
-
-// 8. 데이터마이닝 기능 만들기 
+// 8. 데이터마이닝 기능 만들기
 // 알파벳들의 출현 갯수를 세어주는 함수 만들기.
 // 글자세기('aacbbb') 라고 입력하면 콘솔창에
 // { a: 2, b : 3, c : 1 }
 // ▲ 이렇게 출력해주는 글자세기() 라는 함수만들기.
-function 글자세기([...rest]) {
-    let str = rest;
-    let key;
-    let value;
+function 글자세기(str) {
+    let result = {};
 
-    for (let i = 0; i < str.length; i++) {
-        key = str[i];
-        value = 1;
-        for (let j = 0; j < i; j++) {
-            if (str[i] == str[j]){
-                value +=1;
-            }
+    [...str].forEach(function (a) {
+        if (result[a] > 0) {
+            result[a] ++;
+        } else {
+            result[a] = 1;
         }
-        console.log(key + " = " + value);
-    }
+    })
+    console.log(result);
 }
-글자세기('aacbbb'); 
+글자세기('aacbbb');
+// result라는 object안에 결과[a](결과.a)라는 항목이 있으면 +1해주고
+// 없으면 1로 등록(a:1이렇게)해달라고 짠거임
 
-// 모르겠다. . 
-
+// 헷갈리는 부분이 object타입은 key값을 미리 정의해주지 않고 값을 할당해달라고 해도 그에 맞게 key/value가 들어가는건가?
+// object다루는 법을 더 연습해봐야 할 것 같음
