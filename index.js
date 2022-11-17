@@ -1,119 +1,60 @@
-// Spread, rest 파라미터 연습문제 8개
+// ❗이번 강의 개념은 조금 헷갈린다. 한 번 더 보기!
+// Reference data type과 예제 3가지
+
+// 1. primity data type
+    let 변수 = 1234;
+    // 그냥 문자와 숫자는 primitive data type이라고 함 
+
+    let arr = [1,2,3];  //변수에 refernce가 저장됨
+    let obj = {name : 'kim'};
+    // Array, Object는 변수에 값이 저장이 안됨.
+
+    // 1-1. Primitive data type 다루기 : 복사
+    let name1 = 'kim';  // 'kim'
+    let name2 = name1;  // 'kim
+    name1 = 'pack'; // 'park
+
+    // 1-2. Reference data type 복사
+    let 이름1 = {name:'kim'};   //'kim'
+    let 이름2 = 이름1;
+
+    이름1.name='pack';  // 'pack'
+    console.log(이름2.name)     // 얘도 'pack'으로 변경됨.
+
+    // arr, obj는 reference data type임. 
+    // 이름1에는 {name:'kim'}이 저장되는게 아니라 {name:'kim'}이 있는곳을 찾아가는 주소(화살표)만 저장이 됨.
+
+    // 이름1 ↘
+    //     { name:'pack'} 
+    // 이름2 ↗ (요 화살표가 저장되는 것)
+    // 이렇게 같은 값을 공유하고 있기 때문이 두 변수중 하나만 수정을 해도 두 변수의 값이 모두 변경됨
+    
+    // obj나 arr은 값으로 가는 경로(화살표)를 저장하고 있다고 했다.
+    // 그래서 이름1==이름2를 하면 false가 나온다.
+    // 왤까? 바로 주소는 같지만 경로(화살표)가 다르기 때문!
 
 
-// 1. spread 문제 1 - 위 코드의 출력 결과는?
-var a = [1, 2, 3];
-var b = '김밥';
-var c = [...b, ...a];
-console.log(c);
-// 출력결과 : ['김', '밥', 1, 2, 3]
-
-
-
-
-
-// 2. spread 문제 2 - 위 코드의 출력 결과는?
-var a = [1, 2, 3];
-var b = ['you', 'are'];
-var c = function (a, b) {
-    // console.log([[...a], ...[...b]][1])
-    console.log([[...a], ...[...b]][1]);
+// 2. obj를 변경하는 함수
+function 변경(obj) {
+    obj.이름1 = 'Pack';
 }
-c(a, b);
-// 출력결과 : you
-// [[1, 2, 3], 'you', 'are'][1]이므로 you가 출력.
+변경(이름1);    //'pack' 변경
+// 이렇게 하면 값이 변경됨.
 
-
-
-
-
-// 3. default 파라미터 문제 1
-function 함수(a = 5, b = a * 2) {
-    console.log(a + b);
-    return 10
+// ✨✨✨
+function 변경2(obj) {
+    obj = {name : 'Pack'}
 }
-함수(3);
-// 출력결과 : 9
-// a파라미터가 들어왓으므로 a=3, b=6
+변경2(이름1);   //'kim' 변경되지 않음
+// 왜 이건 변경되지 않을까?
+// 우선 파라미터(obj)는 변수생성&할당과 똑같음
 
+// 그래서 
+변경2(let obj = 이름1);
+// 위 코드와 동일하다고 해석할 수 있음.
 
-
-
-
-// 4. default 파라미터 문제 2
-function 함수(a = 5, b = a * 2) {
-    console.log(a + b);
-}
-함수(undefined, undefined);
-// 출력결과 : 15
-// 변수가 정의되않으면 undefined임.
-// 파라미터 자리에 undefined를 집어넣으면 아무것도 안들어왔다고 판단하고 defualt파라미터가 발동됨.
-
-
-
-
-
-// 5. array를 만들어주는 함수를 제작하고 싶습니다.
-// 이렇게 작성하면[1, 2, 3, 4, 5]가 출력되어야합니다.
-// 함수에 숫자를 100개 집어넣으면 Array안에 숫자100개가 들어가야하고요.
-// 어레이라는 함수를 어떻게 만들면 될까요 ? (new 키워드 사용금지)
-function 어레이(...rest) {
-    for (let i = 0; i < rest.length; i++) {
-        console.log(rest[i]);
-
-    }
-}
-
-let newArray = 어레이(1, 2, 3, 4, 5);
-console.log(newArray);
-
-
-
-
-
-// 6. 최댓값 구하기
-// Math.max()사용해서 최대값 구하기
-let numbers = [2, 3, 4, 5, 6, 1, 3, 2, 5, 5, 4, 6, 7];
-console.log(Math.max(...numbers));
-
-
-
-
-
-// 7. 글자를 알파벳순으로 정렬해주는 함수를 만들고 싶습니다.
-// 일단 자바스크립트는 array 내의 데이터를 알파벳순으로 정렬하고 싶을 때
-// sort()라는 array 내장함수를 붙여 사용합니다. (array에만 적용가능)
-function 정렬(str) {
-    console.log([...str].sort());   // 'a', 'b', 'e', 'r'
-    console.log([...str].sort().join());    //a, b, e, r
-    console.log(...[...str].sort());    //a b e r
-}
-정렬('bear');
-// 반복문을 쓰지 않고 더 쉽게 만들 수 있음. 
-
-
-
-
-// 8. 데이터마이닝 기능 만들기
-// 알파벳들의 출현 갯수를 세어주는 함수 만들기.
-// 글자세기('aacbbb') 라고 입력하면 콘솔창에
-// { a: 2, b : 3, c : 1 }
-// ▲ 이렇게 출력해주는 글자세기() 라는 함수만들기.
-function 글자세기(str) {
-    let result = {};
-
-    [...str].forEach(function (a) {
-        if (result[a] > 0) {
-            result[a] ++;
-        } else {
-            result[a] = 1;
-        }
-    })
-    console.log(result);
-}
-글자세기('aacbbb');
-// result라는 object안에 결과[a](결과.a)라는 항목이 있으면 +1해주고
-// 없으면 1로 등록(a:1이렇게)해달라고 짠거임
-
-// 헷갈리는 부분이 object타입은 key값을 미리 정의해주지 않고 값을 할당해달라고 해도 그에 맞게 key/value가 들어가는건가?
-// object다루는 법을 더 연습해봐야 할 것 같음
+// 즉
+// 이름1(변수)   → {name : 'kim'}
+// obj(파라미터) → {name : 'pack'}
+// 원래 데이터를 변경하는게 아니고, 
+// 파라미터는 새로운 변수를 만드는 문법이고 거기에 새로운 reference를 주겠다는 문법이라고 생각하면 됨.
