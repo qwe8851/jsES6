@@ -1,60 +1,80 @@
-// ❗이번 강의 개념은 조금 헷갈린다. 한 번 더 보기!
 // Reference data type과 예제 3가지
 
-// 1. primity data type
-    let 변수 = 1234;
-    // 그냥 문자와 숫자는 primitive data type이라고 함 
 
-    let arr = [1,2,3];  //변수에 refernce가 저장됨
-    let obj = {name : 'kim'};
-    // Array, Object는 변수에 값이 저장이 안됨.
-
-    // 1-1. Primitive data type 다루기 : 복사
-    let name1 = 'kim';  // 'kim'
-    let name2 = name1;  // 'kim
-    name1 = 'pack'; // 'park
-
-    // 1-2. Reference data type 복사
-    let 이름1 = {name:'kim'};   //'kim'
-    let 이름2 = 이름1;
-
-    이름1.name='pack';  // 'pack'
-    console.log(이름2.name)     // 얘도 'pack'으로 변경됨.
-
-    // arr, obj는 reference data type임. 
-    // 이름1에는 {name:'kim'}이 저장되는게 아니라 {name:'kim'}이 있는곳을 찾아가는 주소(화살표)만 저장이 됨.
-
-    // 이름1 ↘
-    //     { name:'pack'} 
-    // 이름2 ↗ (요 화살표가 저장되는 것)
-    // 이렇게 같은 값을 공유하고 있기 때문이 두 변수중 하나만 수정을 해도 두 변수의 값이 모두 변경됨
-    
-    // obj나 arr은 값으로 가는 경로(화살표)를 저장하고 있다고 했다.
-    // 그래서 이름1==이름2를 하면 false가 나온다.
-    // 왤까? 바로 주소는 같지만 경로(화살표)가 다르기 때문!
+// 1. primitive data type
+// - 변수에 값이 그대로 저장되는 그냥 문자와 숫자
+let 변수 = 1234;
+let 어레이 = [1, 2, 3];     // [1, 2, 3]이 저쪽에 있다는 화살표가 저장 → 이게 reference 타입
 
 
-// 2. obj를 변경하는 함수
-function 변경(obj) {
-    obj.이름1 = 'Pack';
+
+
+
+
+// 2. reference data type
+// - array, object는 변수에 값이 저장되지 않음(주소 저장)
+
+let obj = { name: 'kim' }
+// - obj에는 {name:'kim'}이 저쪽에 있습니다~ 라고 알려주는 "화살표"가 저장
+
+
+
+
+
+// 3. test
+// 3-1. primitive type test
+let primitive이름1 = 'kim';
+let primitive이름2 = primitive이름1;
+primitive이름1='pack';
+
+console.log(primitive이름1);     // 'park'
+console.log(primitive이름2);     // 'kim'
+
+
+
+// 3-2. reference type test
+let reference이름1 = { name: 'kin' }
+let reference이름2 = reference이름1;
+reference이름1.name='park';
+
+console.log(reference이름1);     // 'park'
+console.log(reference이름2);     // 'park'
+// reference data type은 값이 저장되는게 아니라 화살표(주소)가 저장되기 때문에 주소의 값을 변경함
+// 그래서 이름1을 변경하면 이름2도 변경되는 것
+
+// 그래서 array, object는 함부로 복사해서 쓰면 안됨.
+// 오브젝트는 복사 기계를 만들어서 복사를 해야 함
+
+
+
+// 3-3. reference type 비교
+let r이름1 = { name: '김' }
+let r이름2 = { name: '김' } //object는 값이 아닌 화살표가 저장된다고 했음.
+
+r이름1 == r이름2        // false
+// 따라서 이런식으로 비교를 하면 r이름1의 화살표와 r이름2의 화살표가 동일하냐고 물어보는것과 같음
+
+
+
+// 4. obj변경 함수 생성
+let 이름1 ={nane:'kim'}
+
+// 4-1. obj의 특정 값 변경
+function func(obj) {
+    obj.name = 'Park';
 }
-변경(이름1);    //'pack' 변경
-// 이렇게 하면 값이 변경됨.
+func(이름1);    //성공 : pack으로 변경됨
 
-// ✨✨✨
-function 변경2(obj) {
-    obj = {name : 'Pack'}
+// 4-2. obj 통째로 변경
+function func2(obj){
+    obj = {name:'park'}
 }
-변경2(이름1);   //'kim' 변경되지 않음
-// 왜 이건 변경되지 않을까?
-// 우선 파라미터(obj)는 변수생성&할당과 똑같음
+func2(이름1);   //실패.. : 변경 안됨.
 
-// 그래서 
-변경2(let obj = 이름1);
-// 위 코드와 동일하다고 해석할 수 있음.
 
-// 즉
-// 이름1(변수)   → {name : 'kim'}
-// obj(파라미터) → {name : 'pack'}
-// 원래 데이터를 변경하는게 아니고, 
-// 파라미터는 새로운 변수를 만드는 문법이고 거기에 새로운 reference를 주겠다는 문법이라고 생각하면 됨.
+// 4-1과 4-2는 왜 결과값이 다를까?
+// - 4-2처럼 obj를 새로 하나 생성하겟다는 말임.
+//   변경(let obj = 이름1)와 같다는 의미임.
+//   그래서 기존화살표가 아닌 새로 화살표가 생성(변수가 생성되었으므로)되는것
+//   즉, 이름1을변경한 것이 아니라 새로운 obj라는 함수를 만들어 재할당 한 것이라고 생각하면 됨.
+//   그래서 파라미터 변수={}를 해봤자 이름1의 obj 변화가 없는것(파라미터변수만 생성/변경 된 것)
