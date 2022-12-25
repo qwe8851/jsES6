@@ -1,80 +1,71 @@
-// Reference data type과 예제 3가지
+// 객체지향1. Objet 생성기걔인 constructor를 만들어 써보기
+
+let 사람 = { name: 'kim' };
+let 사람2 = 사람;    // 이렇게 쓰면 값을 공유함
 
 
-// 1. primitive data type
-// - 변수에 값이 그대로 저장되는 그냥 문자와 숫자
-let 변수 = 1234;
-let 어레이 = [1, 2, 3];     // [1, 2, 3]이 저쪽에 있다는 화살표가 저장 → 이게 reference 타입
+// ✨ 비슷한 object를 쉽게 찍어낼 수 있는 constructor 문법
+// ex1. 학생 출석부 만들어보기
+let 학생 = { name: 'kim', age: 15 };       // 학생obj를 여러개 생성하고 싶을때 사용하는 constructor
 
-
-
-
-
-
-// 2. reference data type
-// - array, object는 변수에 값이 저장되지 않음(주소 저장)
-
-let obj = { name: 'kim' }
-// - obj에는 {name:'kim'}이 저쪽에 있습니다~ 라고 알려주는 "화살표"가 저장
-
-
-
-
-
-// 3. test
-// 3-1. primitive type test
-let primitive이름1 = 'kim';
-let primitive이름2 = primitive이름1;
-primitive이름1='pack';
-
-console.log(primitive이름1);     // 'park'
-console.log(primitive이름2);     // 'kim'
-
-
-
-// 3-2. reference type test
-let reference이름1 = { name: 'kin' }
-let reference이름2 = reference이름1;
-reference이름1.name='park';
-
-console.log(reference이름1);     // 'park'
-console.log(reference이름2);     // 'park'
-// reference data type은 값이 저장되는게 아니라 화살표(주소)가 저장되기 때문에 주소의 값을 변경함
-// 그래서 이름1을 변경하면 이름2도 변경되는 것
-
-// 그래서 array, object는 함부로 복사해서 쓰면 안됨.
-// 오브젝트는 복사 기계를 만들어서 복사를 해야 함
-
-
-
-// 3-3. reference type 비교
-let r이름1 = { name: '김' }
-let r이름2 = { name: '김' } //object는 값이 아닌 화살표가 저장된다고 했음.
-
-r이름1 == r이름2        // false
-// 따라서 이런식으로 비교를 하면 r이름1의 화살표와 r이름2의 화살표가 동일하냐고 물어보는것과 같음
-
-
-
-// 4. obj변경 함수 생성
-let 이름1 ={nane:'kim'}
-
-// 4-1. obj의 특정 값 변경
-function func(obj) {
-    obj.name = 'Park';
+function 기계(){             // 이게 constructor임
+    this.name = 'kim';          // 얘를 쓰면 object를 마구 뽑아쓸 수 있음.
+    this.age = 15;
 }
-func(이름1);    //성공 : pack으로 변경됨
+let 학생1 = new 기계();  // 이러면 학생1이라는 object가 뽑힘
 
-// 4-2. obj 통째로 변경
-function func2(obj){
-    obj = {name:'park'}
+
+
+
+
+
+
+
+
+// ✨ 기계로 생성되는 모든 학생 object에 sayHi()함수 추가하기
+let 학생2 = { 
+    name : 'kim',
+    age : 18,
+    sayHi(){
+        console.log('안녕하세요 ' + this.name + '입니다.');
+    }
 }
-func2(이름1);   //실패.. : 변경 안됨.
+
+function 기계(){
+    this.name = 'kim';
+    this.age = 18;
+    this.sayHi() = function () {
+        console.log('안녕하세요 ' + this.name + '입니다.');
+    }
+}
+
+let 학생3 = new 기계();
+let 학생4 = new 기계();
+
+학생3.sayHi();
+학생4.sayHi();
 
 
-// 4-1과 4-2는 왜 결과값이 다를까?
-// - 4-2처럼 obj를 새로 하나 생성하겟다는 말임.
-//   변경(let obj = 이름1)와 같다는 의미임.
-//   그래서 기존화살표가 아닌 새로 화살표가 생성(변수가 생성되었으므로)되는것
-//   즉, 이름1을변경한 것이 아니라 새로운 obj라는 함수를 만들어 재할당 한 것이라고 생각하면 됨.
-//   그래서 파라미터 변수={}를 해봤자 이름1의 obj 변화가 없는것(파라미터변수만 생성/변경 된 것)
+
+
+// constructor문법을 이용하면 object생성이 편리해지고
+// this : 기계에서 새로 생성되는 object(instance)
+// 기계 : object생성기계(constructor, 생성자)
+
+
+
+
+
+// 📝 아래와 같은 상품프로젝트를 뽑아낼 수 있는 constructor 제작 & 
+// 상품마다 부가세()라는 내부 함수를 실행하면 콘솔창에 상품가격*10%만큼의 부가세금액이 출력되도록 constructor수정
+var product1 = { name: 'shirts', price: 50000 };
+var product2 = { name: 'pants', price: 60000 };
+
+function Produc(상품명, 가격){
+    this.name = 상품명;
+    this.price = 가격;
+    this.부가세 = function(){
+        console.log(this.price * 0.1)
+    }
+}
+
